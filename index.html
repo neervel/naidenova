@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anastasia Naidenova</title>
+  <link rel="stylesheet" href="./css/animate.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+</head>
+
+<body>
+  <div class="black"></div>
+  <div class="foo"></div>
+  <div id="app">
+    <header class="header">
+      <div class="container">
+        <div class="header-block">
+          <div class="header-logo" v-if="this.nowOpen != 'main'">
+            <img src="./img/logo-short.svg" alt="">
+          </div>
+          <div class="header-control">
+            <audio id="sound" class=" wow fadeInLeft" data-wow-delay="0.5s" loop>
+              <source src="./sound/sound.mp3" type="audio/mpeg">
+              <source src="./sound/sound.ogg" type="audio/ogg">
+              <source src="./sound/sound.wav" type="audio/vnd.wave ">
+            </audio>
+            <button class="header-sound wow fadeInLeft" data-wow-delay="0.6s">
+              <div class="line-1 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-2 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-3 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-4 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-3 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-2 line" style="background-color: #fff; content: ''"></div>
+              <div class="line-1 line" style="background-color: #fff; content: ''"></div>
+            </button>
+            <button class="header-contact wow fadeInLeft" data-wow-delay="0.7s" id="contact" @click="openContact()"><img
+                src="./img/contact.svg" alt="Contact"></button>
+            <a href="./ru/" class="header-lang wow fadeInLeft" data-wow-delay="0.8s">RU</a>
+            <span class="header-divider wow fadeInLeft" data-wow-delay="0.9s"></span>
+            <button class="header-menu wow fadeInLeft" data-wow-delay="1s">
+              <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line class="line-1" y1="1" x2="20" y2="1" stroke="white" stroke-width="2" />
+                <line class="line-2" y1="8" x2="20" y2="8" stroke="white" stroke-width="2" />
+                <line class="line-3" y1="16" x2="20" y2="16" stroke="white" stroke-width="2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="menu">
+      <div class="menu-block">
+        <div class="menu-links">
+          <a href="./ru/" class="menu-lang wow fadeInLeft" data-wow-delay=".3s" v-if="windowWidth < 480">RU</a>
+          <span class="wow fadeInLeft" data-wow-delay=".4s" data-tab="main"
+            @click="openTab('main', `<img src='./img/logo.svg' alt='Anastasia Naidenova'>`)">Main</span>
+          <span class="wow fadeInLeft" data-wow-delay=".5s" data-tab="about"
+            @click="openTab('about', 'about')">About</span>
+          <span class="wow fadeInLeft" data-wow-delay=".6s" data-tab="works"
+            @click="openTab('works', 'paintings')">Paintings</span>
+          <span class="wow fadeInLeft" data-wow-delay=".7s" data-tab="projects"
+            @click="openTab('projects', 'projects')">Projects</span>
+          <span class="wow fadeInLeft" data-wow-delay=".8s" data-tab="studio"
+            @click="openTab('studio', 'studio')">Studio</span>
+          <span class="wow fadeInLeft" data-wow-delay=".9s" data-tab="contacts"
+            @click="openTab('contacts', 'contacts')">contacts</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact">
+      <div class="contact-box">
+        <div class="contact-block">
+          <div class="contact-close">
+            <img src="./img/close.svg" alt="Закрыть">
+          </div>
+          <form class="contact-form" id="contact">
+            <div class="contact-form-field">
+              <input id="contact-name" type="text" name="name" required>
+              <label for="contact-name">Name</label>
+            </div>
+            <div class="contact-form-field">
+              <input id="contact-email" type="text" name="email" required>
+              <label for="contact-email">Email</label>
+            </div>
+            <div class="contact-form-field">
+              <input id="contact-phone" type="text" name="phone" required>
+              <label for="contact-phone">Phone</label>
+            </div>
+            <div class="contact-form-field">
+              <textarea id="contact-message" type="text" name="message" required></textarea>
+              <label for="contact-message">Message</label>
+            </div>
+            <button class="contact-submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="main-bg">
+      <div class="main-bg-block" :style="bgUrl"></div>
+    </div>
+    <div class="main">
+      <div class="main-video-block" v-show="this.nowOpen=='studio'">
+        <video autoplay muted loop class="main-video">
+          <source src="./video/studio.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container">
+        <div class="main-block">
+          <h1 class="main__title wow fadeInUp" data-wow-delay="1s" v-html="title"></h1>
+          <div class="main-arrow animate__animated animate__shakeY animate__infinite" v-if="this.nowOpen != 'main'"
+            @click="scrollDown()">
+            <img src="./img/arrow.svg" alt="Down">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab about" id="about" v-if="this.nowOpen=='about'">
+      <div class="container">
+        <div class="about-block">
+          <div class="about-text">
+            <img src="./img/about.jpg" alt="About" class="about__img">
+            <p class="about__text">Anastasia Naidenova - the creator of unique interior paintings.<br>This is vivid
+              minimalism with graphic elements described to have a unique and catchy look. A mixture of styles and
+              techniques that add mood and meaning to the interior. Paintings and murals for the decoration of famous
+              spaces in Russia and Canada, including the famous Jimmys Coffee chain in Toronto, the Molotoff Capsule
+              Hotel in the old telegraph building in Moscow, and a special series for the PR Myasnitsky Boutique Hotel.
+              Private orders Moscow, St. Petersburg, Tel Aviv, London.</p>
+          </div>
+          <button class="tab-btn" @click="openContact()">Contact</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab works" id="works" v-show="this.nowOpen=='works'">
+      <div class="container">
+        <div class="works-block">
+          <div class="works-cards">
+            <div class="works-card" v-for="work in works" :key="work.id" @click="openGallery(work.id)">
+              <div class="works-card-block">
+                <div class="works-img" :style="work.image"></div>
+                <span class="works__title">{{work.title}}</span>
+                <span class="works__subtitle">{{work.description}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="works-gallery">
+            <div class="works-gallery__close" @click="closeGallery()">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L21 21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M1 21L21 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="works-gallery-item" v-for="work in works" :key="work.id">
+              <button class="works-next-img">
+                <img src="./img/arrow-black.svg" alt="Next image">
+              </button>
+              <div class="works-gallery-img">
+                <div class="works-gallery-images">
+                  <div class="works-gallery-images-item">
+                    <img src="./img/works/11.jpg" alt="">
+                  </div>
+                  <div class="works-gallery-images-item">
+                    <img src="./img/works/12.jpg" alt="">
+                  </div>
+                  <div class="works-gallery-images-item">
+                    <img src="./img/works/13.jpg" alt="">
+                  </div>
+                </div>
+                <h3 class="works-gallery__title">{{work.title}}</h3>
+                <p class="works-gallery__subtitle">{{work.description}}</p>
+              </div>
+              <button class="works-prev-img">
+                <img src="./img/arrow-black.svg" alt="Previuos image">
+              </button>
+            </div>
+          </div>
+          <button class="tab-btn" @click="openContact()">Contact</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab projects" id="projects" v-if="this.nowOpen=='projects'">
+      <div class="container">
+        <p class="projects-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, dolor nulla quia
+          debitis, facere quam eius accusantium laboriosam, porro corporis iste. Eum fugit aliquam voluptate deleniti ut
+          cum perspiciatis quidem.</p>
+      </div>
+      <div class="projects-cards">
+        <div class="projects-card" v-for="project in projects" :key="project.id" @click="openProject(project.id)">
+          <div class="projects-bg">
+            <div class="projects-bg-block" :style="project.image"></div>
+          </div>
+          <div class="projects-card-text">
+            <span class="projects__title">{{project.title}}</span>
+            <span class="projects__subtitle">{{project.description}}</span>
+          </div>
+          <div class="projects-card__fade"></div>
+          <div class="projects-open" :style="project.image" :id="'project-'+project.id">
+            <div class="container">
+              <div class="projects-open-text">
+                <div class="projects-open__title">{{project.title}}</div>
+                <div class="projects-open__description">{{project.description}}</div>
+              </div>
+            </div>
+            <div class="projects-close" @click="closeProject(project.id)">
+              <img src="./img/close.svg" class="close" alt="Закрыть">
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="tab-btn" @click="openContact()">Contact</button>
+    </div>
+    <div class="tab studio" id="studio" v-if="this.nowOpen=='studio'">
+      
+      <video class="studio-player" playsinline controls data-poster="./img/video.png">
+        <source src="./video/studio.mp4" type="video/mp4" />
+      </video>
+      <div class="studio-cards">
+        <div class="studio-card" v-for="card in studio" :key="card.id">
+          <div class="studio-card__img" :style="card.image"></div>
+          <div class="studio-card__text">
+            <span class="studio-card__title">{{card.title}}</span>
+            <span class="studio-card__description">{{card.description}}</span>
+          </div>
+        </div>
+      </div>
+      <button class="tab-btn" @click="openContact()">Contact</button>
+
+    </div>
+    <div class="tab contacts" id="contacts" v-if="this.nowOpen=='contacts'">
+      <div class="container">
+        <div class="contacts-block">
+          <div class="contacts__title">Contacts</div>
+          <div class="contacts__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui nulla tempore
+            tempora alias natus modi in atque explicabo rerum enim dolorem optio, nesciunt sapiente accusantium adipisci
+            dignissimos quisquam eveniet temporibus.</div>
+          <button class="tab-btn" @click="openContact()">Contact</button>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>© {{new Date().getFullYear()}} Anastasia Naidenova. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="./js/wow.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="./js/wow.min.js"></script>
+  <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+
+</html>

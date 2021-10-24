@@ -1,0 +1,851 @@
+@font-face
+  font-family: 'Acrom'
+  src: url('./fonts/Acrom-Medium.ttf')
+
+@import ./_animations.scss
+@import ./_animate.scss
+
+
+*
+  cursor: default
+  font-family: 'Acrom', sans-serif
+
+a
+  color: #fff
+  text-decoration: none
+  cursor: pointer
+
+body
+  box-sizing: border-box
+  margin: 0
+  height: 100vh
+  width: 100vw
+  overflow-x: hidden
+  text-transform: uppercase
+  position: relative
+
+.black
+  position: absolute
+  height: 100vh
+  width: 100vw
+  background-color: #000
+  z-index: 9999999
+
+button
+  border: none
+  background: none
+  cursor: pointer
+  text-transform: uppercase
+  padding: 0
+  &:focus
+    outline: none
+
+.container
+  max-width: 1240px
+  margin: 0 auto
+
+.header
+  position: absolute
+  top: 0
+  width: 100%
+  z-index: 100
+  &-block
+    display: flex
+    align-items: center
+    justify-content: flex-end
+    padding: 50px 0
+  &-logo
+    margin-right: auto
+    margin-left: 0
+    & img
+      width: 350px
+      height: auto
+      
+  &-control
+    display: flex
+    align-items: center
+    justify-content: space-between
+  &-sound
+    margin-right: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 40px
+    background-color: rgba(0, 0, 0, 0)
+    & .line
+      margin: 0 3px
+      width: 3px
+      border-radius: 3px
+      transition: .5s
+      cursor: pointer
+      &-1, &-2, &-3, &-4 
+        height: 5px
+    &.active 
+      & .line
+        &-1
+          animation: scale-up 2s linear  infinite  
+          height: 5px
+        &-2
+          animation: scale-up 2s linear .2s infinite  
+          height: 12px
+        &-3
+          animation: scale-up 2s linear infinite 
+          height: 20px
+        &-4
+          animation: scale-up 2s linear .2s infinite 
+          height: 25px
+        
+
+  &-contact
+    height: 20px
+    position: relative
+    color: #fff
+    margin-right: 50px
+    & img
+      height: 20px
+      width: auto
+    &:hover::after
+      width: 100%
+    &::after
+      position: absolute
+      height: 1px
+      width: 0
+      bottom: -5px
+      left: 0
+      content: ""
+      background-color: #fff
+      transition: .2s
+  &-lang
+    font-size: 16px
+    color: #fff
+    margin-right: 40px
+    position: relative
+  &-divider
+    height: 30px
+    width: 1px
+    background-color: #fff
+    content: ""
+    margin-right: 40px
+  &-menu
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    position: relative
+    z-index: 99
+    &::after
+      position: absolute
+      content: ""
+      height: 0
+      width: 0
+      border-radius: 50%
+      background-color: #000
+      transition: 1s
+      overflow-x: hidden
+    &.open
+      &::after
+        transition: 1s
+        height: 6000px
+        width: 6000px
+    & svg
+      overflow: visible
+      cursor: pointer
+      z-index: 99
+      & line
+        transition: .3s ease-out
+    &:hover
+      & svg 
+        & .line-1
+          transform: translateY(-2px)
+        & .line-3
+          transform: translateY(2px)
+      
+
+.menu
+  display: none
+  position: fixed
+  top: 0
+  position: absolute
+  top: 50%
+  left: 10vw
+  transform: translateY(-50%)
+  z-index: 999
+  &-links
+    display: flex
+    align-items: flex-start
+    flex-flow: column
+    & span
+      display: block
+      color: #fff
+      font-size: 48px
+      margin-bottom: 30px
+      position: relative
+      &:hover
+        cursor: pointer
+      &::after
+        position: absolute
+        content: ""
+        height: 2px
+        width: 0%
+        left: -5px
+        top: 30px
+        transform: translateY(-50%)
+        background-color: #fff
+        transition: .4s
+      &:hover::after
+        width: calc(100% + 10px)
+      &:last-child
+        margin-bottom: 0
+    
+
+.main
+  height: 100vh
+  color: #fff
+  display: flex
+  align-items: center
+  justify-content: center
+  position: relative
+  overflow-y: hidden
+  & .container
+    z-index: 1
+  &-video
+    min-width: 100%
+    min-height: 100%
+    z-index: 1
+    position: absolute
+    &-block
+      position: absolute
+      bottom: 0
+      width: 100vw
+      height: 100vh
+      z-index: 0
+      max-width: 100vw
+      max-height: 100vh
+      overflow: hidden
+      display: flex
+      justify-content: center
+      &::after
+        position: absolute
+        top: 0
+        background-color: rgba(0, 0, 0, .8)
+        content: ""
+        height: 100%
+        width: 100%
+        z-index: 2
+  &-bg
+    position: absolute
+    top: 0
+    right: 0
+    height: 100vh
+    width: 100vw
+    overflow: hidden
+    &-block
+      position: absolute
+      top: 0
+      left: 0
+      width: 100vw
+      height: 100vh
+      background-size: cover
+      background-repeat: no-repeat
+      background-attachment: fixed
+      background-position: center
+      background-blend-mode: multiply
+      background-color: rgba(0, 0, 0, .6)
+      transition: transform 3s ease-out
+      transform: scale(1.2)
+  &-arrow
+    position: absolute
+    bottom: 50px
+    left: 50%
+    transform: translateX(-50%)
+    --animate-duration: 5s
+    &:hover
+      cursor: pointer
+  &__title
+    max-width: 900px
+    font-weight: normal
+    font-size: 72px
+    & img
+      width: 100%
+      height: auto
+
+.contact
+  position: fixed
+  top: 0
+  background-color: rgba(#fff, .6)
+  width: 100vw
+  height: 100vh
+  z-index: 100
+  display: none
+  &-box
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+  &-block
+    padding: 90px 150px
+    background-color: #000
+    position: relative
+  &-close
+    position: absolute
+    top: 40px
+    right: 40px
+    height: 25px
+    width: 25px
+    & img
+      &:hover
+        cursor: pointer
+    &:hover
+      cursor: pointer
+  &-form
+    display: flex
+    align-items: center
+    flex-flow: column
+    &-field
+      position: relative
+      margin-bottom: 40px
+      width: 300px
+      &:last-child
+        margin-bottom: 50px
+    & label
+      position: absolute
+      left: 8px
+      bottom: 8px
+      color: #fff
+      cursor: pointer
+      font-size: 18px
+      transition: .2s
+    & input, & textarea
+      background: none
+      border: none
+      border-bottom: 1px solid #fff
+      width: 100%
+      cursor: pointer
+      padding: 8px
+      z-index: 10
+      color: #fff
+      font-size: 18px
+      &:focus, &:valid
+        outline: none
+        &+label
+          bottom: 35px
+          font-size: 14px
+          color: rgba(#fff, .7)
+    & textarea
+      resize: none
+      height: 60px
+      &+label
+        top: 8px
+      &:focus, &:valid
+        outline: none
+        &+label
+          top: -15px
+          font-size: 14px
+          color: rgba(#fff, .7)
+  &-submit
+    margin-top: 10px
+    color: #fff
+    padding: 15px 50px
+    padding-bottom: 12px
+    font-size: 20px
+    text-align: center
+    border: 1px solid #fff
+    line-height: 20px
+    transition: .4s
+    &:hover
+      color: #000
+      background-color: #fff
+    &:active
+      transform: scale(0.9)
+
+.tab
+  margin-top: 100px
+  padding-bottom: 60px
+  &-btn
+    display: block
+    margin: 0 auto
+    margin-top: 50px
+    padding: 15px 50px
+    padding-bottom: 10px
+    background-color: #000
+    color: #fff
+    font-size: 20px
+
+.about
+  &-text
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-bottom: 50px
+  &__img
+    width: 300px
+    height: auto
+    margin-right: 30px
+  &__text
+    max-width: 700px
+    line-height: 150%
+  
+.works
+  &-cards
+    width: auto
+    margin: 0 auto
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+  &-card
+    margin-bottom: 30px
+    display: flex
+    align-items: center
+    justify-content: center
+    &-block
+      display: flex
+      align-items: start
+      flex-direction: column
+      margin: 0 auto
+  &-img
+    height: 220px
+    width: 350px
+    background-size: cover
+    background-position: center
+    margin-bottom: 15px
+  &__title
+    margin-bottom: 8px
+    font-size: 18px
+    max-width: 100%
+  &__subtitle
+    font-size: 16px
+    max-width: 100%
+  &-gallery
+    display: none
+    // height: 100vh
+    width: 100vw
+    position: absolute
+    top: 0
+    right: 0
+    z-index: 99999
+    background-color: #fff
+    &__close
+      position: absolute
+      top: 50px
+      right: 50px
+      cursor: pointer
+      & svg
+        cursor: pointer
+        &:hover
+          cursor: pointer
+      &:hover
+        cursor: pointer
+    &-item
+      height: 100%
+      display: flex
+      align-items: center
+      justify-content: center
+    &-images
+      &-item
+        height: 70vh
+        max-width: 650px
+        & img
+          height: 100%
+          width: auto
+  &-next
+    &-img
+      position: absolute
+      right: 50px
+      top: 50%
+      transform: translateY(-50%)
+      & img
+        &:hover
+          cursor: pointer
+  &-prev
+    &-img
+      position: absolute
+      left: 50px
+      top: 50%
+      transform: translateY(-50%)
+      & img
+        transform: rotate(180deg)
+        &:hover
+          cursor: pointer
+
+.projects
+  &-text
+    max-width: 900px
+    font-size: 32px
+    line-height: 150%
+  &-cards
+    display: flex
+    align-items: center
+    flex-wrap: wrap
+    width: 100%
+  &-bg
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    overflow: hidden
+    &-block
+      width: 100%
+      height: 100%
+      background-size: cover
+      background-position: center
+      transition: transform ease-out 1s
+  &-card
+    width: 50%
+    min-height: 600px
+    position: relative
+    display: flex
+    flex-flow: column
+    &__fade
+      position: absolute
+      content: ""
+      bottom: 0
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)
+      width: 100%
+      height: 40%
+      z-index: 1
+      transition: ease-out 1s
+    &-text
+      margin-top: auto
+      margin-bottom: 50px
+      display: flex
+      flex-direction: column
+      color: #fff
+      z-index: 2
+      padding: 0 75px
+      max-width: 440px
+    &:hover
+      cursor: pointer
+      & .projects-card__fade
+        height: 60%
+      & .projects-bg-block
+        transform: scale(1.1)
+  &__title
+    font-size: 48px
+    margin-bottom: 25px
+  &__subtitle
+    font-size: 24px
+  &__btn
+    margin-top: 50px
+  &-open
+    display: none
+    position: fixed
+    top: 0
+    left: 0
+    height: 100vh
+    min-width: 100vw
+    background-color: #000
+    color: #fff
+    z-index: 999
+    background-size: cover
+    background-position: center
+    background-blend-mode: multiply
+    background-color: rgba(0, 0, 0, .6)
+    &-text
+      height: 100vh
+      display: flex
+      flex-flow: column
+      justify-content: center
+    &__title
+      font-size: 48px
+      margin-bottom: 25px
+    &__description
+      font-size: 24px
+      max-width: 500px
+  &-close
+    position: absolute
+    top: 100px
+    right: 100px
+    height: 22px
+    width: 22px
+    & img
+      &:hover
+        cursor: pointer
+    
+
+
+.studio
+  margin-top: 0
+  &-card
+    width: 100%
+    display: flex
+    align-items: center
+    &__img
+      flex-basis: 40%
+      height: 100vh
+      background-size: cover
+      background-position: center
+    &__text
+      flex-basis: 60%
+      padding-left: 70px
+    &__title
+      display: block
+      font-size: 72px
+      max-width: 550px
+      margin-bottom: 80px
+      position: relative
+      &::after
+        position: absolute
+        bottom: -35px
+        content: ""
+        background-color: #000
+        height: 2px
+        width: 100px
+        left: 0
+    &__description
+      display: block
+      font-size: 32px
+      line-height: 48px
+      max-width: 80%
+  &-player
+    width: 70%
+    height: auto
+    margin: 50px auto
+    display: block
+
+.contacts
+  &__title
+    font-size: 32px
+    margin-bottom: 20px
+  &__description
+    font-size: 18px
+    line-height: 150%
+    max-width: 500px
+.footer
+  width: 100vw
+  background-color: #000
+  color: #fff
+  padding: 5px 0
+  & p 
+    font-size: 12px
+    text-align: center
+    margin: 0 auto
+
+@media screen and ( max-width: 1440px  )
+  .container
+    max-width: 900px
+  .works
+    &-cards
+      grid-template-columns: repeat(2, 1fr)
+@media screen and ( max-width: 1080px )
+  .container
+    max-width: 700px
+  .header
+    &-block
+      padding: 30px 0
+    &-sound
+      margin-right: 30px
+    &-contact
+      margin-right: 30px
+    &-lang
+      margin-right: 15px
+    &-divider
+      margin-right: 15px
+    &-logo
+      & img
+        width: 250px
+  .main
+    &__title
+      font-size: 48px
+  .about
+    margin-top: 0
+    &-text
+      flex-flow: column
+    &__img
+      margin-bottom: 30px
+      margin-right: 0
+      width: 100vw
+      height: auto
+  .works
+    &-img
+      width: 300px
+      height: 200px
+  .projects
+    &-card
+      &-text
+        padding: 0 30px
+    &-close
+      top: 60px
+      right: 60px
+  .studio
+    &-card
+      flex-direction: column
+      margin-bottom: 50px
+      &__img
+        flex-basis: 100%
+        height: 400px
+        width: 100%
+        min-height: 400px
+        margin-bottom: 20px
+      &__text
+        flex-basis: 100%
+      &__title
+        margin-bottom: 50px
+        &::after
+          bottom: -25px
+@media screen and ( max-width: 768px )
+  .container
+    max-width: 400px
+  .header
+    &-block
+      align-items: center
+      flex-flow: column
+    &-logo
+      margin-bottom: 20px
+      margin-right: 0
+      margin-left: 0
+      & img
+        margin: 0 auto
+        display: block
+    &-control
+      display: flex
+      width: 100%
+      justify-content: space-between
+  .contact
+    &-block
+      padding: 40px 50px
+    &-close
+      top: 20px
+      right: 20px
+      width: 15px
+      height: 15px
+      & img
+        height: 15px
+        width: 15px
+  .tab
+    margin-top: 70px
+  .about
+    margin-top: 0
+  .works
+    &-cards
+      grid-template-columns: repeat(1, 1fr)
+    &-img
+      width: 350px
+      height: 220px
+  .projects
+    &-card
+      width: 100%
+      min-height: 500px
+    &-text
+      font-size: 24px
+  .studio
+    margin-top: 0
+    &-card
+      &__img
+        height: 300px
+        min-height: 300px
+      &__text 
+        padding-left: 40px
+      &__title
+        font-size: 48px
+        max-width: 90%
+      &__description
+        font-size: 24px
+        max-width: 90%
+@media screen and ( max-width: 480px )
+  .container
+    max-width: 90%
+  .header
+    &-contact
+      margin-right: 25px
+      margin-left: auto
+      font-size: 16px
+    &-lang
+      display: none
+    &-divider
+      margin-right: 25px
+  .main
+    &__title
+      font-size: 40px
+      margin-bottom: 10px
+  .contact
+    &-block
+      width: 90%
+    &-form
+      &-field
+        width: 250px
+        & input, & textarea
+          width: 250px
+          font-size: 16px
+        & label
+          font-size: 16px
+    &-submit
+      margin-top: -10px
+      font-size: 16px
+      padding: 10px 30px
+      padding-bottom: 8px
+  .menu
+    left: 5vw
+    &-links
+      & span
+        margin-bottom: 20px
+        font-size: 32px
+        &::after
+          top: 20px
+      & a
+        position: absolute
+        top: -150px
+        border: 1px solid #fff
+        padding: 10px 15px
+        padding-bottom: 8px
+  .tab
+    margin-top: 50px
+  .about
+    margin-top: 0
+    &__text
+      margin-top: 0
+      font-size: 16px
+  .studio
+    &-card
+      flex-flow: column
+      &__img
+        flex-basis: 100%
+        height: 300px
+        width: 100%
+  .works
+    &-card
+      margin-bottom: 30px
+    &-img
+      width: 280px
+      height: 170px
+      margin-bottom: 10px
+  .projects
+    &-text
+      font-size: 18px
+    &-card
+      min-height: 300px
+    &__title
+      font-size: 32px
+      margin-bottom: 10px
+    &__subtitle
+      font-size: 16px
+    &-open
+      &__title
+        font-size: 32px
+      &__description
+        font-size: 18px
+    &-close
+      top: 30px
+      right: 30px
+  .studio
+    margin-top: 0
+    &-card
+      margin-bottom: 35px
+      &__text
+
+        padding-left: 30px
+      &__title
+        font-size: 28px
+        margin-bottom: 30px
+        &::after
+          bottom: -15px
+      &__description
+        font-size: 18px
+        line-height: 130%
+    &-player
+      width: 90%
+      margin: 30px auto
+  .footer
+    & p 
+      max-width: 220px
+      font-size: 12px
